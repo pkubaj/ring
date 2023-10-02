@@ -640,6 +640,7 @@ static inline void table_select_4(ge_precomp_4 *t, const int pos,
 //
 // Preconditions:
 //   a[31] <= 127
+__attribute__((noinline))
 __attribute__((target("adx,bmi2")))
 void x25519_ge_scalarmult_base_adx(uint8_t h[4][32], const uint8_t a[32]) {
   signed char e[64];
