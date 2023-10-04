@@ -50,6 +50,14 @@ pub(crate) fn features() -> Features {
                 unsafe {
                     OPENSSL_cpuid_setup();
                 }
+                extern crate std;
+                use std::println;
+                prefixed_extern! {
+                    static mut OPENSSL_ia32cap_P: [u32; 4];
+                }
+                unsafe {
+                    println!("{:x}, {:x}, {:x}, {:x}", OPENSSL_ia32cap_P[0], OPENSSL_ia32cap_P[1], OPENSSL_ia32cap_P[2],OPENSSL_ia32cap_P[3])
+                }
             }
 
             #[cfg(all(
