@@ -112,6 +112,7 @@ fn x25519_ecdh(
             }
         }
 
+        assert!(!cfg!(target_vendor = "apple") || !ops::has_fe25519_adx(cpu_features));
         #[cfg(all(target_arch = "x86_64", not(target_os = "windows")))]
         {
             if ops::has_fe25519_adx(cpu_features) {

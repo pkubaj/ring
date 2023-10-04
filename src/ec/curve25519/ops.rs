@@ -84,6 +84,7 @@ impl ExtPoint {
         prefixed_extern! {
             fn x25519_ge_scalarmult_base(h: &mut ExtPoint, a: &Scalar, has_fe25519_adx: c::int);
         }
+        assert!(!cfg!(target_vendor = "apple") || !has_fe25519_adx(cpu));
         unsafe {
             x25519_ge_scalarmult_base(&mut r, scalar, has_fe25519_adx(cpu).into());
         }
