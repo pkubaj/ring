@@ -79,9 +79,17 @@ jobs:
           echo "RUSTFLAGS=-C target-feature=+crt-static" >> $GITHUB_ENV
         shell: bash
 
+      - if: ${{ contains(matrix.host_os, 'linux') }}
+        run: |
+          cat /proc/cpuinfo | grep "^flags" | head -n1
+
+      - if: ${{ contains(matrix.host_os, 'macos') }}
+        run: |
+          sysctl -a | grep machdep.cpu.features
+
       - if: ${{ !contains(matrix.host_os, 'windows') }}
         run: |
-          mk/cargo.sh test -vv --all-targets --target=${{ matrix.target }} ${{ matrix.cargo_options }} ${{ matrix.features }} ${{ matrix.mode }}
+          mk/cargo.sh test -vv --all-targets --target=${{ matrix.target }} ${{ matrix.cargo_options }} ${{ matrix.features }} ${{ matrix.mode }} -- --nocapture  
 
       - if: ${{ contains(matrix.host_os, 'windows') }}
         run: |
