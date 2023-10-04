@@ -464,6 +464,7 @@ static void fe4_invert(fe4 out, const fe4 z) {
   fe4_mul(out, t1, t0);
 }
 
+__attribute__((noinline))
 __attribute__((target("adx,bmi2")))
 void x25519_scalar_mult_adx(uint8_t out[32], const uint8_t scalar[32],
                             const uint8_t point[32]) {
